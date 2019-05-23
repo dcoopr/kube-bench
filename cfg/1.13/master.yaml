@@ -1504,3 +1504,20 @@ groups:
     remediation: |
       Create a PSP as described in the Kubernetes documentation, ensuring that the .spec.requiredDropCapabilities is set to include either NET_RAW or ALL.
     scored: false
+
+- id: 2.0
+  text: "Additional security checks per v3 sec assessment"
+  checks:
+  - id: 2.0.1
+    text: "Ensure the port 10250 is not open"
+    audit: "curl http://127.0.0.1:10250/runningpods/"
+    type: "manual"
+    tests:
+    test_items:
+    - flag: '200'
+      compare:
+        op: eq
+        value: 200
+        set: true
+    remediation: "Ensure this port is not open by removing port 10250."
+    scored: true

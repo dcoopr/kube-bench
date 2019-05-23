@@ -13,9 +13,10 @@ spec:
         operator: Exists
         effect: NoSchedule
       containers:
-      - name: kube-bench
-        image: aquasec/kube-bench:latest
+      - name: kube-bench-test
+        image: dcoopersuse/kube-bench-regression-edits:latest
         command: ["kube-bench","master"]
+        args: ["--version", "1.13", "-v", "10"]
         volumeMounts:
         - name: var-lib-etcd
           mountPath: /var/lib/etcd
@@ -25,6 +26,8 @@ spec:
           # You can omit this mount if you specify --version as part of the command.
         - name: usr-bin
           mountPath: /usr/bin
+      imagePullSecrets:
+        - name: regcred
       restartPolicy: Never
       volumes:
       - name: var-lib-etcd

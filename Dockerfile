@@ -11,7 +11,7 @@ FROM alpine:3.7 AS run
 WORKDIR /opt/kube-bench/
 # add GNU ps for -C, -o cmd, and --no-headers support
 # https://github.com/aquasecurity/kube-bench/issues/109
-RUN apk --no-cache add procps
+RUN apk --no-cache add procps grep curl
 COPY --from=build /go/bin/kube-bench /usr/local/bin/kube-bench
 ADD entrypoint.sh .
 ADD cfg/ cfg/

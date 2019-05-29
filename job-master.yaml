@@ -14,7 +14,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: kube-bench-test
-        image: dcoopersuse/kube-bench-regression-edits:latest
+        image: dcoopersuse/kube-bench-regression-edits:full-tests-5
         command: ["kube-bench","master"]
         args: ["--version", "1.13", "-v", "10"]
         volumeMounts:
@@ -24,8 +24,8 @@ spec:
           mountPath: /etc/kubernetes
           # /usr/bin is mounted to access kubectl / kubelet, for auto-detecting the Kubernetes version. 
           # You can omit this mount if you specify --version as part of the command.
-        - name: usr-bin
-          mountPath: /usr/bin
+          # - name: usr-bin
+          # mountPath: /usr/bin
       imagePullSecrets:
         - name: regcred
       restartPolicy: Never
@@ -36,6 +36,6 @@ spec:
       - name: etc-kubernetes
         hostPath:
           path: "/etc/kubernetes"
-      - name: usr-bin
-        hostPath:
-          path: "/usr/bin"
+          # - name: usr-bin
+          # hostPath:
+          # path: "/usr/bin"

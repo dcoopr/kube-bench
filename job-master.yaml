@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: kube-bench-master
+  namespace: kube-system
 spec:
   template:
     spec:
@@ -14,7 +15,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: kube-bench-test
-        image: dcoopersuse/kube-bench-regression-edits:full-tests-5
+        image: dcoopersuse/kube-bench-regression-edits:no-root-3
         command: ["kube-bench","master"]
         args: ["--version", "1.13", "-v", "10"]
         volumeMounts:

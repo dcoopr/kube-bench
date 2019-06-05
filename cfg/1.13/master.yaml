@@ -9,8 +9,8 @@ groups:
   text: "Additional security checks per v3 sec assessment"
   checks:
   - id: 1.1.1
-    text: "Ensure the port 443 is not open"
-    audit: "curl http://127.0.0.1:443/runningpods/"
+    text: "Ensure the port 10250 is not open"
+    audit: "curl http://127.0.0.1:10250/runningpods/"
     tests:
       test_items:
       - flag: "status 7"
@@ -22,16 +22,16 @@ groups:
     scored: true
 
   - id: 1.1.2
-    text: "Check if sudoers capability present"
-    audit: "sudo echo hello world"
+    text: "Check if primary account is root"
+    audit: "whoami"
     tests:
       test_items:
-      - flag: 'hello world'
+      - flag: "root"
         compare:
           op: has
-          value: "hello world"
-        set: true
-    remediation: "Restrict sudoers access and command capability via the /etc/sudoers file"
+          value: "root"
+        set: false
+    remediation: "Root user should not be primary user for nodes"
     scored: false
 
   - id: 1.1.3
@@ -40,7 +40,7 @@ groups:
       test_items:
       - flag: '--authorization-mode=RBAC'
         compare:
-          op: eq
+          op: has
           value: true
         set: true
     remediation: "Ensure RBAC is enabled to limit access to etcd"
